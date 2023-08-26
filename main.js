@@ -25,7 +25,8 @@ let keypressed = [];
 
 let background = new Backgrounds();
 let bird = new Bird();
-let enemy = new Enemy();
+let enemies = [];
+let time = 0;
 
 function render()
 {
@@ -40,14 +41,27 @@ function update( dt )
 {
     background.update( dt );
     bird.update( dt );
-    enemy.update( dt );
+    for ( let enemy of enemies )
+    {
+        enemy.update( dt );
+    }
+    time += dt;
+    if ( time > 3 )
+    {
+        enemies.push( new Enemy() );
+        time = 0;
+    }
     keypressed = [];
     for ( let ball of bird.fireballs )
     {
-        if ( collide( enemy, ball ) )
+        for ( let enemy of enemies )
         {
-            enemy.killed = true;
+            if ( collide( enemy, ball ) )
+            {
+                enemy.killed = true;
+            }
         }
+
         console.log( 'collide' );
     }
 }
@@ -56,7 +70,10 @@ function draw()
 {
     background.draw();
     bird.draw();
-    enemy.draw();
+    for ( let enemy of enemies )
+    {
+        enemy.draw();
+    }
 }
 
 document.addEventListener( 'keydown', function ( event )
