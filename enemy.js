@@ -4,7 +4,7 @@ class Enemy
     {
         this.enemy = images[ 'enemy' ];
         this.x = g_virtual_width + 10;
-        this.y = random( 50, g_virtual_height - 35 );
+        this.y = random( 50, g_virtual_height - 60 );
         this.width = this.enemy.width;
         this.height = this.enemy.height;
         this.speed = -20;

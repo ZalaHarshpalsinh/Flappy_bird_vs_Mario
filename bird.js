@@ -9,6 +9,7 @@ class Bird
         this.dy = 0;
         this.jump = -5;
         this.fireballs = [];
+        this.last_fire = Date.now();
     }
 
     update( dt )
@@ -20,8 +21,13 @@ class Bird
         }
         if ( keypressed[ 'Enter' ] )
         {
-            let tmp = new Fireball( this.x + 10, this.y );
-            this.fireballs.push( tmp );
+            let delay = ( Date.now() - this.last_fire ) / 1000;
+            if ( delay > 1 )
+            {
+                let tmp = new Fireball( this.x + 10, this.y );
+                this.fireballs.push( tmp );
+                this.last_fire = Date.now();
+            }
         }
         this.y = Math.min( this.y + this.dy, g_virtual_height - 35 );
         for ( let ball of this.fireballs )
